@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Actualités | {{ .Site.Title }}</title>
+</head>
+<body>
+
+<h1>Actualités</h1>
+
+{{ range .Pages }}
+  <article>
+    <h2>
+      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+    </h2>
+    <p>{{ .Summary }}</p>
+  </article>
+{{ end }}
+
+</body>
+</html>
