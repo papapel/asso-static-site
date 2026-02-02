@@ -5,3 +5,20 @@ enableRobotsTXT = true
 
 [params]
   description = "Site officiel de l'association"
+
+[menu]
+
+  [[menu.main]]
+    name = "Accueil"
+    url = "/"
+    weight = 1
+
+  [[menu.main]]
+    name = "Actualités"
+    url = "/news/"
+    weight = 2
+
+  [[menu.main]]
+    name = "À propos"
+    url = "/a-propos/"
+    weight = 3
