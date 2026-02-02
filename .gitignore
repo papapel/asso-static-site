@@ -1,0 +1,33 @@
+## `.gitignore`
+
+Ça dépend un peu du générateur, mais voici une **base saine et universelle** :
+
+```gitignore
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Node / JS (si utilisé)
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Build output
+dist/
+public/
+build/
+
+# Cache
+.cache/
+.tmp/
+
+# Logs
+*.log
+
+# Env
+.env
+.env.local
