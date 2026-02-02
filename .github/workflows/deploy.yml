@@ -1,11 +1,9 @@
-name: Deploy site from Issue
+name: Deploy article
 
 on:
-  workflow_dispatch:   # tu peux déclencher manuellement
-  schedule:
-    - cron: '0 0 * * *'  # tous les jours à minuit
   push:
     branches: ["main"]
+  workflow_dispatch:
 
 jobs:
   deploy:
@@ -13,9 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Installer un petit outil pour récupérer issues
-      - name: Install jq
-        run: sudo apt-get install jq -y
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y jq pandoc
 
       # Récupérer la dernière issue
       - name: Get latest issue
@@ -27,14 +24,14 @@ jobs:
             -H "Authorization: token $GITHUB_TOKEN" \
             -H "Accept: application/vnd.github.v3+json" \
             https://api.github.com/repos/${{ github.repository }}/issues?state=open&sort=created&direction=desc | jq -r '.[0].body')
-          echo "$ISSUE_CONTENT" > index.md
+          echo "$ISSUE_CONTENT" > article.md
 
       # Convertir Markdown → HTML
       - name: Convert Markdown to HTML
         run: |
-          sudo apt-get install pandoc -y
-          pandoc index.md -o index.html
+          pandoc article.md -o article.html
 
+      # Déploiement sur GitHub Pages
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
