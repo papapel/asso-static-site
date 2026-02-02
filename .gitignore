@@ -31,3 +31,11 @@ build/
 # Env
 .env
 .env.local
+
+# Hugo build
+/public/
+/resources/
+.hugo_build.lock
+
+# OS
+.DS_Store
