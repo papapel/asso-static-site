@@ -1,21 +1,21 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>Actualités | {{ .Site.Title }}</title>
-</head>
-<body>
+{{ define "main" }}
 
 <h1>Actualités</h1>
 
-{{ range .Pages }}
-  <article>
-    <h2>
-      <a href="{{ .RelPermalink }}">{{ .Title }}</a>
-    </h2>
-    <p>{{ .Summary }}</p>
-  </article>
-{{ end }}
+<section class="news-grid">
+  {{ range sort (where .Pages "Type" "news") "Date" "desc" }}
+    <article class="news-card">
+      <a href="{{ .RelPermalink }}">
+        <h2>{{ .Title }}</h2>
+        <p class="date">{{ .Date.Format "02/01/2006" }}</p>
+        <p>{{ .Summary }}</p>
+      </a>
+    </article>
+  {{ end }}
 
-</body>
-</html>
+  {{ if not .Pages }}
+    <p>Aucune actualité pour le moment.</p>
+  {{ end }}
+</section>
+
+{{ end }}
