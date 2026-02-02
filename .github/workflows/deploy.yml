@@ -1,39 +1,34 @@
-name: Deploy article
+name: Build and Deploy Hugo Site
 
 on:
   push:
-    branches: ["main"]
-  workflow_dispatch:
+    branches:
+      - main   # ou master selon ton repo
+  schedule:
+    - cron: '0 0 * * *'  # build tous les jours à minuit UTC
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
+      # 1️⃣ Checkout le repo
+      - uses: actions/checkout@v3
 
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y jq pandoc
-
-      # Récupérer la dernière issue
-      - name: Get latest issue
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          echo "Fetching latest issue..."
-          ISSUE_CONTENT=$(curl -s \
-            -H "Authorization: token $GITHUB_TOKEN" \
-            -H "Accept: application/vnd.github.v3+json" \
-            https://api.github.com/repos/${{ github.repository }}/issues?state=open&sort=created&direction=desc | jq -r '.[0].body')
-          echo "$ISSUE_CONTENT" > article.md
-
-      # Convertir Markdown → HTML
-      - name: Convert Markdown to HTML
-        run: |
-          pandoc article.md -o article.html
-
-      # Déploiement sur GitHub Pages
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
+      # 2️⃣ Installer Hugo
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v3
         with:
-          path: .
-      - uses: actions/deploy-pages@v4
+          hugo-version: '0.114.0'  # ou la version que tu veux
+
+      # 3️⃣ Build du site
+      - name: Build
+        run: hugo --minify
+
+      # 4️⃣ Déployer sur GitHub Pages
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v5
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+          # branch: gh-pages  # optionnel, par défaut gh-pages
