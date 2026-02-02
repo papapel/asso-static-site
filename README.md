@@ -37,3 +37,29 @@ d’utiliser un nom de domaine personnalisé (ex: www.monasso.fr).
 ├── .github/
 │   └── workflows/  # CI/CD GitHub Actions
 └── README.md
+
+
+
+
+
+
+
+
+## Hugo
+### Installation
+sudo apt install hugo
+hugo version
+
+### New website
+hugo new site . --force
+mkdir -p static/css
+
+### Run website locally
+build `hugo`
+run locally `hugo server` ou `hugo server -D` pour que les drafts soient pris en compte
+go to address: `http://localhost:1313/`
+
+### Files to commit
+content/ -> website contents
+layouts/ -> website layouts
+static -> website assets
