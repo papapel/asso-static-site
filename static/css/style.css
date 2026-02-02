@@ -1,0 +1,15 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  line-height: 1.6;
+}
+
+.hero {
+  padding: 4rem;
+  background: #111;
+  color: white;
+}
+
+.news {
+  padding: 2rem;
+}
