@@ -1,0 +1,7 @@
+baseURL = "https://www.monasso.fr/"
+languageCode = "fr-fr"
+title = "Mon Asso"
+enableRobotsTXT = true
+
+[params]
+  description = "Site officiel de l'association"
